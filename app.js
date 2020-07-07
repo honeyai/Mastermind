@@ -7,14 +7,19 @@ let fourth = $(".theCode .fourth");
 
 let circle = [first, second, third, fourth];
 
+let codeCircle = [];
+
+let circleColors = [];
+
 const randIndex = array => Math.floor(Math.random() * array.length);
 
 const codeMaker = () => { 
   for (element in circle){
-    circle[element].css("background-color", color[randIndex(color)]);
+    codeCircle.push(circle[element].css("background-color", color[randIndex(color)]));
+    //creating an array of colors.
+    codeCircle.forEach(element => circleColors.push(element.css("background-color")))
   }
 }
-
 
 //make this increment thru the rounds
 
@@ -30,6 +35,58 @@ let round = `.round${roundIncrement}`;
 
 //   }
     
+
+
+
+
+  
+//create a button "check answer". When it's clicked it'll compare to see if the colors are in the right divs/ in the right order/ or not at all.
+
+//for in of the check answer and code if the index of both circles have the same color then it will be a green peg. 
+
+//if the color is found in the area of the code but not in the same index it will be a yellow peg.checkAnswer
+
+//none of the above is empty.
+
+
+let check1 = $(`${round} .feedBack .answerCircle1`);
+let check2 = $(`${round} .feedBack .answerCircle2`);
+let check3 = $(`${round} .feedBack .answerCircle3`);
+let check4 = $(`${round} .feedBack .answerCircle4`);
+
+let feedBack = [check1, check2, check3, check4];
+let fbColor =  ["#1DB39E","#FF8D5C"]
+ 
+
+const doesItMatch = (element, code) => {
+  if(element.css("background-color") === code.css("background-color")){
+    let localIndex = randIndex(feedBack);
+    let grabbingDiv = feedBack[localIndex];
+    feedBack.splice(localIndex,1);
+    $(grabbingDiv).css("background-color", fbColor[0]);
+  } else if(circleColors.includes(element.css("background-color"))){ 
+    let localIndex = randIndex(feedBack);
+    let grabbingDiv = feedBack[localIndex];
+    feedBack.splice(localIndex,1);
+    $(grabbingDiv).css("background-color", fbColor[1]);
+    console.log("match, but not exact");
+  }
+  
+}
+
+let button = $(".checkAnswer");
+
+button.click(function(){
+  doesItMatch(trigger1, circle[0])
+  doesItMatch(trigger2, circle[1])
+  doesItMatch(trigger3, circle[2])
+  doesItMatch(trigger4, circle[3])
+  roundIncrement++;
+  console.log(roundIncrement);
+});
+
+
+codeMaker();
 
     
 let trigger1 = $(`${round} ${roundCircle[0]}`);
@@ -82,47 +139,3 @@ $(trigger4).click(function(){
     next4 = 0;
   }
 })
-
-
-  
-//create a button "check answer". When it's clicked it'll compare to see if the colors are in the right divs/ in the right order/ or not at all.
-
-//for in of the check answer and code if the index of both circles have the same color then it will be a green peg. 
-
-//if the color is found in the area of the code but not in the same index it will be a yellow peg.checkAnswer
-
-//none of the above is empty.
-
-
-let check1 = $(`${round} .feedBack .answerCircle1`);
-let check2 = $(`${round} .feedBack .answerCircle2`);
-let check3 = $(`${round} .feedBack .answerCircle3`);
-let check4 = $(`${round} .feedBack .answerCircle4`);
-
-let feedBack = [check1, check2, check3, check4];
-let fbColor =  ["#1DB39E","#FF8D5C"]
- 
-
-const doesItMatch = (element, code) => {
-  if(element.css("background-color") === code.css("background-color")){
-    let localIndex = randIndex(feedBack);
-    let grabbingDiv = feedBack[localIndex];
-    feedBack.splice(localIndex,1);
-    $(grabbingDiv).css("background-color", fbColor[0]);
-  } else {
-    // console.log("This is the element,",element.css("background-color") ,"\nThis is the code,", code.css("background-color") )
-    console.log("no match")
-  }
-}
-
-let button = $(".checkAnswer");
-
-button.click(function(){
-  doesItMatch(trigger1, circle[0])
-  doesItMatch(trigger2, circle[1])
-  doesItMatch(trigger3, circle[2])
-  doesItMatch(trigger4, circle[3])
-});
-
-
-codeMaker();
