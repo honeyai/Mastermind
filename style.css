@@ -26,6 +26,8 @@
 
 .theBoard{
   /* border: solid; */
+  display: flex;
+  flex-direction: column;
   grid-column: 2;
   grid-row: 2;
 }
@@ -35,6 +37,30 @@
   padding: 2%;
   display: flex;
   justify-content: space-around;
+}
+
+.checkAnswer{
+  background-color: cadetblue;
+  color: antiquewhite;
+  min-width: 9vh;
+  max-width: 9vh;
+  min-height: 5vh;
+  max-height: 5vh;
+  text-align: center;
+  align-self: center;
+  transition: 0.2s;
+}
+
+.checkAnswer:hover{
+  background-color: rgb(40, 88, 90);
+  color: rgb(199, 176, 146);
+}
+
+.checkAnswer:active{
+  min-width: 8.5vh;
+  max-width: 8.5vh;
+  min-height: 4.7vh;
+  max-height: 4.7vh;
 }
 
 .feedBack{

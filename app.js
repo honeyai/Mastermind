@@ -37,9 +37,6 @@ let trigger2 = $(`${round} ${roundCircle[1]}`);
 let trigger3 = $(`${round} ${roundCircle[2]}`);
 let trigger4 = $(`${round} ${roundCircle[3]}`);
 
-
-
-
 let next1 = 0;
 $(trigger1).click(function(){
   if (next1 < color.length-1){
@@ -86,8 +83,27 @@ $(trigger4).click(function(){
   }
 })
   
-// }
+//create a button "check answer". When it's clicked it'll compare to see if the colors are in the right divs/ in the right order/ or not at all.
 
+//for in of the check answer and code if the index of both circles have the same color then it will be a green peg. 
+
+//if the color is found in the area of the code but not in the same index it will be a yellow peg.checkAnswer
+
+//none of the above is empty.
+
+const doesItMatch = (element, code) => {
+  if(element.css("background-color") === code.css("background-color")){
+    alert("it matches")
+  } else {
+    console.log("This is the element,",element.css("background-color") ,"\nThis is the code,", code.css("background-color") )
+  }
+}
+
+let button = $(".checkAnswer");
+
+button.click(function(){
+  doesItMatch(trigger1, circle[0])
+});
 
 
 codeMaker();
