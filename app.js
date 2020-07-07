@@ -82,6 +82,8 @@ $(trigger4).click(function(){
     next4 = 0;
   }
 })
+
+
   
 //create a button "check answer". When it's clicked it'll compare to see if the colors are in the right divs/ in the right order/ or not at all.
 
@@ -91,11 +93,25 @@ $(trigger4).click(function(){
 
 //none of the above is empty.
 
+
+let check1 = $(`${round} .feedBack .answerCircle1`);
+let check2 = $(`${round} .feedBack .answerCircle2`);
+let check3 = $(`${round} .feedBack .answerCircle3`);
+let check4 = $(`${round} .feedBack .answerCircle4`);
+
+let feedBack = [check1, check2, check3, check4];
+let fbColor =  ["#1DB39E","#FF8D5C"]
+ 
+
 const doesItMatch = (element, code) => {
   if(element.css("background-color") === code.css("background-color")){
-    alert("it matches")
+    let localIndex = randIndex(feedBack);
+    let grabbingDiv = feedBack[localIndex];
+    feedBack.splice(localIndex,1);
+    $(grabbingDiv).css("background-color", fbColor[0]);
   } else {
-    console.log("This is the element,",element.css("background-color") ,"\nThis is the code,", code.css("background-color") )
+    // console.log("This is the element,",element.css("background-color") ,"\nThis is the code,", code.css("background-color") )
+    console.log("no match")
   }
 }
 
@@ -103,6 +119,9 @@ let button = $(".checkAnswer");
 
 button.click(function(){
   doesItMatch(trigger1, circle[0])
+  doesItMatch(trigger2, circle[1])
+  doesItMatch(trigger3, circle[2])
+  doesItMatch(trigger4, circle[3])
 });
 
 
