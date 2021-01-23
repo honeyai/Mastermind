@@ -5,12 +5,18 @@ let second = $(".theCode .second");
 let third = $(".theCode .third");
 let fourth = $(".theCode .fourth");
 
-let circle = [first, second, third, fourth];
 
-let codeCircle = [];
+//the elements of each code
+let code = [first, second, third, fourth];
 
+//only the colors of the code
 let circleColors = [];
 
+//will hold the colors player is guessing
+let guess = [];
+
+
+//to eventually loop?
 let totalRounds = 12; 
 
 let roundCircle = [".first", ".second", ".third", ".fourth"];
@@ -37,11 +43,12 @@ let button = $(".checkAnswer");
 const randIndex = array => Math.floor(Math.random() * array.length);
 
 const codeMaker = () => { 
-  for (element in circle){
+  for (element in code){
     //Assigning random colors to the code circles  
-    circle[element].css("background-color", color[randIndex(color)]);
-    //Creating an array of the chosen colors to compare later.
-    circle.forEach(element => circleColors.push(element.css("background-color")))
+    code[element].css("background-color", color[randIndex(color)]);
+
+    //Creating an array of the code colors to compare to guess.
+    code.forEach(element => circleColors.push(element.css("background-color")))
   }
 }
 
@@ -59,23 +66,32 @@ const doesItMatch = (element, code) => {
     feedBack.splice(localIndex,1);
     $(grabbingDiv).css("background-color", fbColor[0]);
     console.log(feedBack[localIndex])
-  } else if(circleColors.includes(element.css("background-color"))){ 
-    let localIndex = randIndex(feedBack);
-    let grabbingDiv = feedBack[localIndex];
-    feedBack.splice(localIndex,1);
-    $(grabbingDiv).css("background-color", fbColor[1]);
-    console.log("match, but not exact");
-    console.log(feedBack[localIndex])
+  } else if(guess !== code.css("background-color") ){
+    //i need an array to compare the positions of the guess and the answer... i think
+    //I have the answer array: theCode
+    //
+
+    //so that if the color is included in the array that's good  
+    // if(circleColors.includes(guess[0])){
+      //give hint only once for a color that isn't in the right place
+      let localIndex = randIndex(feedBack);
+      let grabbingDiv = feedBack[localIndex];
+      feedBack.splice(localIndex,1);
+      $(grabbingDiv).css("background-color", fbColor[1]);
+      console.log("match, but not exact");
+      console.log(feedBack[localIndex])
+    // }
   }
 }
 
 
 
 button.click(function(){
-  doesItMatch(trigger1, circle[0])
-  doesItMatch(trigger2, circle[1])
-  doesItMatch(trigger3, circle[2])
-  doesItMatch(trigger4, circle[3])
+  guess.push(trigger4.css("background-color"))
+  doesItMatch(trigger1, code[0])
+  doesItMatch(trigger2, code[1])
+  doesItMatch(trigger3, code[2])
+  doesItMatch(trigger4, code[3])
 
   roundIncrement++;
 
@@ -89,10 +105,11 @@ button.click(function(){
   trigger4 = $(`${round} ${roundCircle[3]}`);
 
   console.log("this is trigger1", `${round} ${roundCircle[0]}`)
+
+  console.log("this are the guess colors,", guess)
 });
   
 
- 
 let next1 = 0;
 $(trigger1).click(function(){
   if (next1 < color.length-1){
@@ -106,6 +123,7 @@ $(trigger1).click(function(){
 
 let next2 = 0;
 $(trigger2).click(function(){
+  guess.push(trigger1.css("background-color"))
   if (next2 < color.length-1){
     trigger2.css("background-color", color[next2]);
     next2++;
@@ -117,18 +135,18 @@ $(trigger2).click(function(){
 
 let next3 = 0;
 $(trigger3).click(function(){
+  guess.push(trigger2.css("background-color"))
   if (next3 < color.length-1){
     trigger3.css("background-color", color[next3]);
     next3++;
-    console.log("this is next,", next3)
   } else {
     trigger3.css("background-color", color[next3]);
     next3 = 0;
-    console.log("this is next,", next3)
   }
 })
 
 let next4 = 0;
+guess.push(trigger3.css("background-color"))
 $(trigger4).click(function(){
   if (next4 < color.length-1){
     trigger4.css("background-color", color[next4]);
@@ -138,3 +156,6 @@ $(trigger4).click(function(){
     next4 = 0;
   }
 })
+
+//*==============================NOTES================================
+//! Only per circle that is 
